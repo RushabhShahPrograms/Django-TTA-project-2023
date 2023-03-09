@@ -1,7 +1,8 @@
+
 from django.shortcuts import render
 from django.views.generic.edit import CreateView,DeleteView,UpdateView
 from django.views.generic import ListView,DetailView
-from .models import Food
+from .models import Food,AddFile
 
 # Create your views here.
 class FoodCreateView(CreateView):
@@ -30,4 +31,15 @@ class FoodUpdateView(UpdateView):
 class FoodDetailView(DetailView):
     model = Food
     template_name = 'cbv/fooddetail.html'
-    context_object_name = 'fooddetail'    
+    context_object_name = 'fooddetail'
+
+class AddFileView(CreateView):
+    model = AddFile
+    template_name = 'cbv/addfile.html'
+    success_url = '/cbv/filelist'
+    fields = '__all__'
+    
+class FileListView(ListView):
+    model = AddFile
+    template_name = 'cbv/filelist.html'
+    context_object_name = 'filelist'

@@ -1,5 +1,19 @@
-<form method ="POST">
+{% extends '../base.html' %}
+{% comment %} <form method ="POST">
     {% csrf_token %}
     {{form.as_p}}
     <input type="submit" value="Submit" />
-    </form>
+    </form> {% endcomment %}
+
+
+
+{% block header %}
+    {% include '../header.html' %}
+{% endblock header %}
+
+{% block content %}
+    {% csrf_token %}
+    {% load crispy_forms_tags %}
+    {{form | crispy}}
+    <input type="submit" value="Submit"/>
+{% endblock content %}

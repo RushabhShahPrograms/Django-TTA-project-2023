@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'cbv',
     'product',
     'student',
+    'crispy_forms',
+    'crispy_bootstrap5'
 ]
 
 MIDDLEWARE = [
@@ -134,10 +136,13 @@ STATIC_URL = '/static/'
 STATIC_ROOT = '/static'
 
 STATICFILES_DIRS = [
-    STATIC_DIR,
+    STATIC_DIR,"static"
 ]
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
