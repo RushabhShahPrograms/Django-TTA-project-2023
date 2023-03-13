@@ -1,5 +1,5 @@
 
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponseRedirect
 from django.views.generic.edit import CreateView,DeleteView,UpdateView
 from django.views.generic import ListView,DetailView
 from .models import Food,AddFile
@@ -11,22 +11,43 @@ class FoodCreateView(CreateView):
     template_name = 'cbv/foodcreate.html'
     success_url = '/cbv/list'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        #context['info_sended'] = False # an extra variable
+        return context
+        
+
 class FoodListView(ListView):
     model = Food
-    template_name = 'cbv/foodlist.html'
     context_object_name = 'foodlist'
+    template_name = 'cbv/foodlist.html'
+
+    def get(self, request, *args, **kwargs):
+            self.form = Food(request.GET)
+            if self.form.is_valid():
+                self.queryset = self.form.process_search(self.queryset)
+            return super(FoodDetailView, self).get(request, *args, **kwargs)
+
 
 class FoodDeleteView(DeleteView):
     model = Food
     template_name = 'cbv/fooddelete.html'
-    success_url = '/cbv/list'  
+    success_url = '/cbv/list'
+
+    # def get(self, request, *args, **kwargs):
+    #     return self.delete(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+    
+      
 
 
 class FoodUpdateView(UpdateView):
     model = Food
     template_name = 'cbv/foodupdate.html'
     fields = '__all__'
-    success_url = '/cbv/list'      
+    success_url = '/cbv/list'
     
 class FoodDetailView(DetailView):
     model = Food
@@ -38,6 +59,10 @@ class AddFileView(CreateView):
     template_name = 'cbv/addfile.html'
     success_url = '/cbv/filelist'
     fields = '__all__'
+
+    def form_valid(self, form):
+        self.object = form.save()
+        return HttpResponseRedirect(self.get_success_url())
     
 class FileListView(ListView):
     model = AddFile
