@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'product',
     'student',
     'crispy_forms',
-    'crispy_bootstrap5'
+    'crispy_bootstrap5',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -79,6 +80,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'pms.wsgi.application'
+AUTH_USER_MODEL = 'user.User'
 
 
 # Database

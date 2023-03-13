@@ -27,6 +27,7 @@ urlpatterns = [
     path('',views.home),
     path('product/',include('product.urls')),
     path('cbv/',include('cbv.urls')),
+    path('user/',include('user.urls')),
 ]
 
 if settings.DEBUG:

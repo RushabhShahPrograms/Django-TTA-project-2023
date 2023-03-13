@@ -22,11 +22,16 @@ class FoodListView(ListView):
     context_object_name = 'foodlist'
     template_name = 'cbv/foodlist.html'
 
-    def get(self, request, *args, **kwargs):
-            self.form = Food(request.GET)
-            if self.form.is_valid():
-                self.queryset = self.form.process_search(self.queryset)
-            return super(FoodDetailView, self).get(request, *args, **kwargs)
+    # def get(self, request, *args, **kwargs):
+    #         self.form = FoodListView(request.GET)
+    #         if self.form.is_valid():
+    #             self.queryset = self.form.process_search(self.queryset)
+    #         return super(FoodDetailView, self).get(request, *args, **kwargs)
+    
+    def get_queryset(self):
+        return super().get_queryset()
+
+
 
 
 class FoodDeleteView(DeleteView):
